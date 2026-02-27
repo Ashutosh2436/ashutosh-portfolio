@@ -12,9 +12,11 @@ interface CaseStudyProps {
     performance: string;
     security?: string;
     evolution: string;
+    githubUrl?: string;
+    liveUrl?: string;
 }
 
-export function ProjectCaseStudy({ title, context, architecture, decisions, failures, performance, security, evolution }: CaseStudyProps) {
+export function ProjectCaseStudy({ title, context, architecture, decisions, failures, performance, security, evolution, githubUrl, liveUrl }: CaseStudyProps) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -27,13 +29,37 @@ export function ProjectCaseStudy({ title, context, architecture, decisions, fail
                     <h3 className="text-4xl font-sans font-bold tracking-tighter mb-6 text-white uppercase italic">
                         {title}
                     </h3>
-                    <div className="flex gap-4 mb-8">
-                        <button className="flex items-center gap-2 text-[10px] font-mono border border-border px-4 py-2 hover:bg-white/5 transition-colors uppercase tracking-widest rounded-sm">
-                            <Github size={14} /> Repository
-                        </button>
-                        <button className="flex items-center gap-2 text-[10px] font-mono border border-border px-4 py-2 hover:bg-white/5 transition-colors uppercase tracking-widest rounded-sm text-white">
-                            <ExternalLink size={14} /> Deployment
-                        </button>
+                    <div className="flex flex-col gap-4 mb-8">
+                        <div>
+                            {githubUrl ? (
+                                <a href={githubUrl} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 text-[10px] font-mono border border-border px-4 py-2 hover:bg-white/5 transition-colors uppercase tracking-widest rounded-sm">
+                                    <Github size={14} /> Source Code
+                                </a>
+                            ) : (
+                                <span className="inline-flex items-center gap-2 text-[10px] font-mono border border-border/40 px-4 py-2 uppercase tracking-widest rounded-sm opacity-40 cursor-not-allowed">
+                                    <Github size={14} /> Source Code
+                                </span>
+                            )}
+                            <p className="text-slate-600 font-mono text-[9px] mt-1.5 pl-1 uppercase tracking-widest">
+                                View the full codebase on GitHub
+                            </p>
+                        </div>
+                        <div>
+                            {liveUrl ? (
+                                <a href={liveUrl} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 text-[10px] font-mono border border-border px-4 py-2 hover:bg-white/5 transition-colors uppercase tracking-widest rounded-sm text-white">
+                                    <ExternalLink size={14} /> Live Demo
+                                </a>
+                            ) : (
+                                <span className="inline-flex items-center gap-2 text-[10px] font-mono border border-border/40 px-4 py-2 uppercase tracking-widest rounded-sm opacity-40 cursor-not-allowed text-slate-500">
+                                    <ExternalLink size={14} /> Live Demo
+                                </span>
+                            )}
+                            <p className="text-slate-600 font-mono text-[9px] mt-1.5 pl-1 uppercase tracking-widest">
+                                Open the live running application
+                            </p>
+                        </div>
                     </div>
 
                     <div className="space-y-8 mt-12">

@@ -163,23 +163,30 @@ export default function Home() {
         />
 
         <ProjectCaseStudy
-          title="YOUTUBE_SYSTEMS_CLONE"
-          context="Built as a study in distributed content delivery and large-scale asset management, focusing on the infrastructure behind the UI."
-          architecture="React_Frontend -> Aggregator_Service -> Transcoding_Node -> CDN_Sim_Storage"
+          title="HOLIFEST_ECOMMERCE"
+          context="A full-stack Holi festival e-commerce platform with a real cloud backend. Built with Node.js, Express, MongoDB, and React — fully deployed on Vercel with JWT auth, admin panel, and live product catalog."
+          architecture="React_Frontend (Vercel) -> Axios -> Node/Express_API (Vercel) -> MongoDB_Atlas (Cloud)"
           decisions={[
             {
-              point: "Asynchronous Transcoding",
-              reasoning: "Video uploads are handled via presigned URLs to offload heavy IO from the API server. State updates are pushed via WebSockets post-processing."
+              point: "Serverless Backend on Vercel",
+              reasoning: "Deployed the Express backend as a Vercel Serverless Function, allowing zero-server-management with automatic scaling under traffic spikes."
+            },
+            {
+              point: "MongoDB Atlas for Persistence",
+              reasoning: "Using a managed cloud database (Atlas M0) means zero-downtime, automatic backups, and geo-distributed reads without managing infrastructure."
             }
           ]}
           failures={[
             {
-              scenario: "Database bottleneck on global video view counts.",
-              mitigation: "Implementing a write-behind cache strategy using Redis counters, flushing to the main DB in 5-minute intervals."
+              scenario: "Frontend hitting a local backend during cloud deployment.",
+              mitigation: "Moved the API base URL to a Vite environment variable (VITE_API_URL), allowing the build pipeline to inject the correct Vercel URL at deploy-time."
             }
           ]}
-          performance="Optimized for 'First Paint' using Next.js partial pre-rendering (PPR). Metadata cached via geometric TTL strategy."
-          evolution="Researching HLS/DASH dynamic adaptive streaming implementation to manage varying network conditions in simulated low-bandwidth environments."
+          performance="Cold-start serverless latency < 800ms. Static frontend assets cached via Vercel's global Edge CDN for sub-50ms TTFB."
+          security="JWT-based stateless auth with role-based access control (ADMIN / USER). Passwords hashed with bcrypt. CORS restricted to the frontend origin."
+          evolution="Migrating product images to Cloudinary CDN for optimized delivery. Planning Stripe payment gateway integration for real transactions."
+          githubUrl="https://github.com/Ashutosh2436/holi-frontend"
+          liveUrl="https://frontend-pi-tan-28.vercel.app"
         />
       </section>
 
