@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, Send } from "lucide-react";
 
 export function ContactSection() {
@@ -28,17 +27,17 @@ export function ContactSection() {
                             </div>
                         </a>
 
-                        <a href="https://linkedin.com/in/ashutosh-awasthi-a1a904271/" className="flex items-center gap-6 group">
+                        <a href="https://linkedin.com/in/ashutosh-awasthi-a1a904271/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group">
                             <div className="w-12 h-12 rounded-sm border border-border flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                                 <Linkedin size={20} />
                             </div>
                             <div>
                                 <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-1">LinkedIn</span>
-                                <span className="text-sm border-b border-transparent group-hover:border-white transition-all">ashutosh-awasthi-a1a904271/</span>
+                                <span className="text-sm border-b border-transparent group-hover:border-white transition-all">ashutosh-awasthi-a1a904271</span>
                             </div>
                         </a>
 
-                        <a href="https://github.com/Ashutosh2436" className="flex items-center gap-6 group">
+                        <a href="https://github.com/Ashutosh2436" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group">
                             <div className="w-12 h-12 rounded-sm border border-border flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                                 <Github size={20} />
                             </div>
@@ -50,38 +49,72 @@ export function ContactSection() {
                     </div>
                 </div>
 
-                <div className="p-10 minimal-card rounded-sm">
-                    <form className="space-y-6">
-                        <div>
-                            <label className="text-[10px] font-mono text-slate-500 block mb-3 uppercase tracking-widest">Identity</label>
-                            <input
-                                type="text"
-                                placeholder="Name / Organization"
-                                className="w-full bg-transparent border-b border-border py-4 text-sm font-sans text-white focus:border-white focus:outline-none transition-all placeholder:text-slate-700"
-                            />
-                        </div>
-                        <div>
-                            <label className="text-[10px] font-mono text-slate-500 block mb-3 uppercase tracking-widest">Return Address</label>
-                            <input
-                                type="email"
-                                placeholder="email@example.com"
-                                className="w-full bg-transparent border-b border-border py-4 text-sm font-sans text-white focus:border-white focus:outline-none transition-all placeholder:text-slate-700"
-                            />
-                        </div>
-                        <div>
-                            <label className="text-[10px] font-mono text-slate-500 block mb-3 uppercase tracking-widest">Inquiry Payload</label>
-                            <textarea
-                                rows={4}
-                                placeholder="Summarize your connection objective..."
-                                className="w-full bg-transparent border-b border-border py-4 text-sm font-sans text-white focus:border-white focus:outline-none transition-all placeholder:text-slate-700 resize-none"
-                            />
-                        </div>
-                        <button className="w-full bg-white text-black font-sans font-bold py-5 px-8 rounded-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-3 group uppercase text-sm tracking-wide mt-8">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
+                <ContactForm />
             </div>
         </section>
+    );
+}
+
+function ContactForm() {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
+        const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+        const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim();
+
+        if (!name || !email || !message) {
+            alert("Please fill in all fields before sending.");
+            return;
+        }
+
+        const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+        const body = encodeURIComponent(`From: ${name}\nReply-to: ${email}\n\n${message}`);
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&to=ashutoshawasthi2002@gmail.com&su=${subject}&body=${body}`;
+        window.open(gmailUrl, "_blank");
+    };
+
+    return (
+        <div className="p-10 minimal-card rounded-sm">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                <div>
+                    <label className="text-[10px] font-mono text-slate-500 block mb-3 uppercase tracking-widest">Identity</label>
+                    <input
+                        name="name"
+                        type="text"
+                        placeholder="Name / Organization"
+                        className="w-full bg-transparent border-b border-border py-4 text-sm font-sans text-white focus:border-white focus:outline-none transition-all placeholder:text-slate-700"
+                    />
+                </div>
+                <div>
+                    <label className="text-[10px] font-mono text-slate-500 block mb-3 uppercase tracking-widest">Return Address</label>
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="email@example.com"
+                        className="w-full bg-transparent border-b border-border py-4 text-sm font-sans text-white focus:border-white focus:outline-none transition-all placeholder:text-slate-700"
+                    />
+                </div>
+                <div>
+                    <label className="text-[10px] font-mono text-slate-500 block mb-3 uppercase tracking-widest">Inquiry Payload</label>
+                    <textarea
+                        name="message"
+                        rows={4}
+                        placeholder="Summarize your connection objective..."
+                        className="w-full bg-transparent border-b border-border py-4 text-sm font-sans text-white focus:border-white focus:outline-none transition-all placeholder:text-slate-700 resize-none"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    className="w-full bg-white text-black font-sans font-bold py-5 px-8 rounded-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-3 group uppercase text-sm tracking-wide mt-8"
+                >
+                    <Send size={16} className="group-hover:translate-x-1 transition-transform" />
+                    Send Message
+                </button>
+                <p className="text-[10px] font-mono text-slate-600 text-center tracking-widest uppercase mt-2">
+                    Opens Gmail with your message pre-filled
+                </p>
+            </form>
+        </div>
     );
 }
