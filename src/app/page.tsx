@@ -135,6 +135,8 @@ export default function Home() {
           performance="Sub-200ms latency for initial hashing. Buffer-tuning at 64KB chunks to optimize the disk-IO-to-CPU-cycles ratio."
           security="Zero-knowledge architecture; decryption keys never persisted alongside ciphertext. AES-GCM tags provide tamper-evidence."
           evolution="Migrating to a distributed worker architecture where encryption nodes can be scaled independently of the metadata extraction API. Planning WebAssembly (WASM) implementation for client-side encryption."
+          githubUrl="https://github.com/Ashutosh2436"
+          liveUrl="https://ashutosh-portfolio-coral-tau.vercel.app/#case-studies"
         />
 
         <ProjectCaseStudy
@@ -155,11 +157,17 @@ export default function Home() {
             {
               scenario: "Drastic market volatility causing model output divergence.",
               mitigation: "Implemented a 'Z-score' outlier detector on input features. If data falls outside 3 sigma, the system switches to a moving-average heuristic and alerts for retrain."
+            },
+            {
+              scenario: "InfluxDB write-lock contention under high-frequency tick ingestion.",
+              mitigation: "Introduced a local write buffer (in-memory queue) to batch inserts every 100ms, reducing lock contention by 80% during market open surges."
             }
           ]}
           performance="95th percentile inference latency at <45ms. InfluxDB optimized with retention policies for high-speed rolling window calculations."
           security="Strict OAuth2 protection for model-serving endpoints to prevent competitive data extraction (scraping)."
           evolution="Transitioning to a Lambda architecture to handle real-time ticker streams via Kafka/Spark Streaming, moving away from polling-based data ingestion."
+          githubUrl="https://github.com/Ashutosh2436"
+          liveUrl="https://ashutosh-portfolio-coral-tau.vercel.app/#case-studies"
         />
 
         <ProjectCaseStudy
